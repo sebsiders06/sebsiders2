@@ -103,6 +103,10 @@
       overflow-x: hidden;
       overflow-wrap: break-word;
     }
+    body.menu-open {
+      overflow: hidden;
+      touch-action: none;
+    }
     input, textarea, button, select { font: inherit; }
     [id] { scroll-margin-top: 6rem; }
 
@@ -163,6 +167,7 @@
       gap: 0.5rem;
       flex-wrap: wrap;
     }
+    .nav-backdrop { display: none; }
     .nav-toggle {
       display: none;
       align-items: center;
@@ -646,6 +651,9 @@
 
     /* ----- Responsive mobile-first ----- */
     @media (max-width: 768px) {
+      .header {
+        z-index: 1000;
+      }
       .header-inner {
         align-items: center;
         justify-content: space-between;
@@ -668,18 +676,37 @@
         margin-top: 0;
         margin-bottom: 0;
         padding: 0.4rem 0.7rem;
+        position: relative;
+        z-index: 10001;
       }
       .nav {
         display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
         width: 100%;
+        height: 100vh;
         flex-direction: column;
         align-items: stretch;
-        gap: 0.35rem;
-        padding-top: 0.85rem;
-        margin-top: 0.15rem;
-        border-top: 1px solid var(--grey-border);
+        justify-content: flex-start;
+        gap: 0.5rem;
+        padding: 5.5rem 1rem 1.5rem;
+        margin-top: 0;
+        border-top: none;
+        background: var(--white);
+        z-index: 9999;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
       }
       .nav.is-open { display: flex; }
+      .nav-backdrop {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(30, 41, 59, 0.45);
+        z-index: 9998;
+      }
+      .nav-backdrop.is-open { display: block; }
       .nav a,
       .nav .btn-devis {
         display: block;
@@ -846,6 +873,7 @@
         <span class="nav-toggle-bar" aria-hidden="true"></span>
         Menu
       </button>
+      <div class="nav-backdrop" hidden></div>
       <nav class="nav" id="main-nav" aria-label="Navigation principale">
         <a href="#accueil">Accueil</a>
         <a href="#formations">Formations</a>
@@ -1258,16 +1286,29 @@
     (function () {
       var toggle = document.querySelector('.nav-toggle');
       var nav = document.getElementById('main-nav');
-      if (!toggle || !nav) return;
+      var backdrop = document.querySelector('.nav-backdrop');
+      var body = document.body;
+      var toggleLabel = toggle ? toggle.childNodes[toggle.childNodes.length - 1] : null;
+      if (!toggle || !nav || !backdrop || !body) return;
 
       function setOpen(isOpen) {
         nav.classList.toggle('is-open', isOpen);
+        backdrop.classList.toggle('is-open', isOpen);
+        backdrop.hidden = !isOpen;
+        body.classList.toggle('menu-open', isOpen);
         toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
         toggle.setAttribute('aria-label', isOpen ? 'Fermer le menu' : 'Ouvrir le menu');
+        if (toggleLabel) {
+          toggleLabel.textContent = isOpen ? ' Fermer' : ' Menu';
+        }
       }
 
       toggle.addEventListener('click', function () {
         setOpen(!nav.classList.contains('is-open'));
+      });
+
+      backdrop.addEventListener('click', function () {
+        setOpen(false);
       });
 
       nav.querySelectorAll('a').forEach(function (link) {
@@ -1276,8 +1317,16 @@
         });
       });
 
+      document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape' && nav.classList.contains('is-open')) {
+          setOpen(false);
+        }
+      });
+
       window.addEventListener('resize', function () {
-        if (window.innerWidth > 768) setOpen(false);
+        if (window.innerWidth > 768) {
+          setOpen(false);
+        }
       });
     })();
 
