@@ -1,7 +1,7 @@
 <?php
 /**
  * Envoi des demandes de devis par email.
- * Reçoit POST : nom, email, message.
+ * Reçoit POST : nom, email, telephone, sujet, message.
  * Utilise PHPMailer + SMTP si configuré (config-mail.php), sinon mail() avec en-têtes optimisés.
  */
 
@@ -28,10 +28,14 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
 $nom = isset($_POST['nom']) ? trim((string) $_POST['nom']) : '';
 $email = isset($_POST['email']) ? trim((string) $_POST['email']) : '';
+$telephone = isset($_POST['telephone']) ? trim((string) $_POST['telephone']) : '';
+$sujetForm = isset($_POST['sujet']) ? trim((string) $_POST['sujet']) : '';
 $message = isset($_POST['message']) ? trim((string) $_POST['message']) : '';
 
 $nom = mb_substr($nom, 0, 200);
 $email = mb_substr($email, 0, 254);
+$telephone = mb_substr($telephone, 0, 30);
+$sujetForm = mb_substr($sujetForm, 0, 200);
 $message = mb_substr($message, 0, 2000);
 
 $errors = array();
@@ -42,6 +46,12 @@ if ($email === '') {
     $errors[] = 'Veuillez indiquer votre adresse email.';
 } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     $errors[] = 'Veuillez saisir une adresse email valide.';
+}
+if ($telephone !== '' && !preg_match('/^[0-9+\s().-]{6,30}$/', $telephone)) {
+    $errors[] = 'Veuillez saisir un numéro de téléphone valide.';
+}
+if ($sujetForm === '') {
+    $errors[] = 'Veuillez indiquer le sujet de votre demande.';
 }
 if ($message === '') {
     $errors[] = 'Veuillez rédiger votre message.';
@@ -54,12 +64,45 @@ if (!empty($errors)) {
 }
 
 $destinataire = 'philippe.clemente@orange.fr';
-$sujet = 'Demande de devis – Formation SST';
+$sujet = 'Demande de devis – ' . $sujetForm;
 
-$corps = "Une demande de devis a été envoyée depuis le site Formation SST.\n\n";
-$corps .= "Nom : " . $nom . "\n";
-$corps .= "Email : " . $email . "\n\n";
-$corps .= "Message :\n" . $message . "\n";
+function e($value)
+{
+    return htmlspecialchars((string) $value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+}
+
+$telephoneAffiche = $telephone !== '' ? $telephone : 'Non renseigné';
+
+$rows = array(
+    array('Nom', e($nom)),
+    array('Email', e($email)),
+    array('Téléphone', e($telephoneAffiche)),
+    array('Sujet', e($sujetForm)),
+    array('Message', nl2br(e($message))),
+);
+
+$tableRows = '';
+foreach ($rows as $row) {
+    $tableRows .= '<tr>';
+    $tableRows .= '<td style="padding:8px;border:1px solid #d0d7de;background:#f8fafc;font-weight:700;width:160px;">' . e($row[0]) . '</td>';
+    $tableRows .= '<td style="padding:8px;border:1px solid #d0d7de;background:#ffffff;">' . $row[1] . '</td>';
+    $tableRows .= '</tr>';
+}
+
+$corpsHtml = '<!DOCTYPE html><html lang="fr"><body style="margin:0;padding:24px;font-family:Arial,sans-serif;color:#1f2937;background:#ffffff;">';
+$corpsHtml .= '<h2 style="margin:0 0 16px;font-size:20px;color:#1e3a5f;">Nouvelle demande de devis</h2>';
+$corpsHtml .= '<p style="margin:0 0 16px;">Une demande de devis a été envoyée depuis le site Formation SST.</p>';
+$corpsHtml .= '<table cellpadding="0" cellspacing="0" style="border-collapse:collapse;width:100%;max-width:720px;border:1px solid #d0d7de;">';
+$corpsHtml .= $tableRows;
+$corpsHtml .= '</table>';
+$corpsHtml .= '</body></html>';
+
+$corpsTexte = "Une demande de devis a été envoyée depuis le site Formation SST.\n\n";
+$corpsTexte .= "Nom : " . $nom . "\n";
+$corpsTexte .= "Email : " . $email . "\n";
+$corpsTexte .= "Téléphone : " . $telephoneAffiche . "\n";
+$corpsTexte .= "Sujet : " . $sujetForm . "\n\n";
+$corpsTexte .= "Message :\n" . $message . "\n";
 
 // Chargement de la config optionnelle (SMTP)
 $config = array();
@@ -106,8 +149,9 @@ if (is_file($autoload) && !empty($config['use_smtp']) && !empty($config['smtp_ho
         $mail->addAddress($destinataire);
         $mail->addReplyTo($email, $nom);
         $mail->Subject = $sujet;
-        $mail->Body = $corps;
-        $mail->isHTML(false);
+        $mail->isHTML(true);
+        $mail->Body = $corpsHtml;
+        $mail->AltBody = $corpsTexte;
         $mail->send();
         $sent = true;
     } catch (\Throwable $e) {
@@ -124,7 +168,7 @@ if (!$sent) {
 
     $headers = array();
     $headers[] = 'MIME-Version: 1.0';
-    $headers[] = 'Content-Type: text/plain; charset=UTF-8';
+    $headers[] = 'Content-Type: text/html; charset=UTF-8';
     $headers[] = 'Content-Transfer-Encoding: 8bit';
     $headers[] = 'From: ' . $fromName . ' <' . $fromEmail . '>';
     $headers[] = 'Reply-To: ' . $nom . ' <' . $email . '>';
@@ -134,7 +178,7 @@ if (!$sent) {
     $headers[] = 'X-Mailer: Formation-SST-PHP';
 
     $encodedSubject = '=?UTF-8?B?' . base64_encode($sujet) . '?=';
-    $sent = mail($destinataire, $encodedSubject, $corps, implode("\r\n", $headers));
+    $sent = mail($destinataire, $encodedSubject, $corpsHtml, implode("\r\n", $headers));
 }
 
 if ($sent) {

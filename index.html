@@ -1216,6 +1216,14 @@
               <input type="email" name="email" required placeholder="votre@email.fr" maxlength="254" autocomplete="email" />
             </label>
             <label>
+              <span>Téléphone</span>
+              <input type="tel" name="telephone" placeholder="06 00 00 00 00" maxlength="30" autocomplete="tel" inputmode="tel" />
+            </label>
+            <label>
+              <span>Sujet</span>
+              <input type="text" name="sujet" required placeholder="Ex. Formation SST pour 8 salariés" maxlength="200" autocomplete="off" />
+            </label>
+            <label>
               <span>Message</span>
               <textarea name="message" required rows="4" placeholder="Formation souhaitée, nombre de personnes, lieu..." maxlength="2000"></textarea>
             </label>
@@ -1225,6 +1233,7 @@
       </div>
     </div>
   </section>
+  </main>
 
   <footer class="footer" role="contentinfo">
     <div class="footer-inner">
@@ -1245,7 +1254,6 @@
       </nav>
     </div>
   </footer>
-  </main>
   <script>
     (function () {
       var toggle = document.querySelector('.nav-toggle');
@@ -1391,6 +1399,8 @@
         e.preventDefault();
         var nom = (formDevis.querySelector('[name="nom"]') || {}).value.trim();
         var email = (formDevis.querySelector('[name="email"]') || {}).value.trim();
+        var telephone = (formDevis.querySelector('[name="telephone"]') || {}).value.trim();
+        var sujet = (formDevis.querySelector('[name="sujet"]') || {}).value.trim();
         var message = (formDevis.querySelector('[name="message"]') || {}).value.trim();
 
         if (!nom) {
@@ -1408,6 +1418,16 @@
           formDevis.querySelector('[name="email"]').focus();
           return;
         }
+        if (telephone && !/^[0-9+\s().-]{6,30}$/.test(telephone)) {
+          showDevisMsg('Veuillez saisir un numéro de téléphone valide.', true);
+          formDevis.querySelector('[name="telephone"]').focus();
+          return;
+        }
+        if (!sujet) {
+          showDevisMsg('Veuillez indiquer le sujet de votre demande.', true);
+          formDevis.querySelector('[name="sujet"]').focus();
+          return;
+        }
         if (!message) {
           showDevisMsg('Veuillez rédiger votre message.', true);
           formDevis.querySelector('[name="message"]').focus();
@@ -1417,6 +1437,8 @@
         var formData = new FormData();
         formData.append('nom', nom);
         formData.append('email', email);
+        formData.append('telephone', telephone);
+        formData.append('sujet', sujet);
         formData.append('message', message);
 
         if (btnDevis) {
@@ -1439,8 +1461,8 @@
           })
           .catch(function () {
             showDevisMsg('Connexion impossible. Votre client mail va s\'ouvrir pour envoyer votre demande.', false);
-            var subject = 'Demande de devis – Formation SST';
-            var body = 'Nom : ' + nom + '\r\nEmail : ' + email + '\r\n\r\nMessage :\r\n' + message;
+            var subject = sujet || 'Demande de devis – Formation SST';
+            var body = 'Nom : ' + nom + '\r\nEmail : ' + email + '\r\nTéléphone : ' + (telephone || 'Non renseigné') + '\r\nSujet : ' + subject + '\r\n\r\nMessage :\r\n' + message;
             window.location.href = 'mailto:' + emailDevis + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
           })
           .then(function () {
