@@ -32,6 +32,10 @@
     }
     html { scroll-behavior: smooth; }
     *, *::before, *::after { box-sizing: border-box; }
+    img, svg, video, canvas, iframe {
+      max-width: 100%;
+      height: auto;
+    }
     body {
       margin: 0;
       font-family: 'Source Sans 3', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -40,7 +44,12 @@
       line-height: 1.6;
       font-size: 1rem;
       min-height: 100vh;
+      max-width: 100%;
+      overflow-x: hidden;
+      overflow-wrap: break-word;
     }
+    input, textarea, button, select { font: inherit; }
+    [id] { scroll-margin-top: 6rem; }
 
     /* ----- Hiérarchie typographique ----- */
     h1 { font-size: clamp(1.75rem, 4vw, 2.25rem); font-weight: 700; line-height: 1.25; letter-spacing: -0.02em; }
@@ -81,6 +90,30 @@
       align-items: center;
       gap: 0.5rem;
       flex-wrap: wrap;
+    }
+    .nav-toggle {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      min-width: 44px;
+      min-height: 44px;
+      padding: 0.6rem 0.9rem;
+      border: 1px solid var(--grey-border);
+      border-radius: var(--radius);
+      background: var(--white);
+      color: var(--blue-marine);
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .nav-toggle:hover { background: var(--bg); }
+    .nav-toggle-bar {
+      display: block;
+      width: 18px;
+      height: 2px;
+      border-radius: 999px;
+      background: currentColor;
+      box-shadow: 0 6px 0 currentColor, 0 -6px 0 currentColor;
     }
     .nav a {
       color: var(--text-muted);
@@ -133,6 +166,7 @@
       min-width: 280px;
       max-width: 680px;
       text-align: left;
+      min-width: 0;
     }
     .hero .badge {
       display: inline-block;
@@ -307,7 +341,15 @@
     .tarif-card .price { font-size: 1.4rem; font-weight: 700; color: var(--blue-marine); margin: 0 0 0.5rem; }
     .tarif-card small { font-size: 0.9rem; color: var(--text-muted); }
     .tarif-card .note { font-size: 0.85rem; color: var(--text-muted); margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--grey-border); }
-    .tarifs-cta { text-align: center; margin-top: 2rem; }
+    .tarifs-cta {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      text-align: center;
+      margin-top: 2rem;
+    }
 
     /* ----- Boutons CTA sobres ----- */
     .btn-cta {
@@ -484,6 +526,7 @@
     .avis-card-actions { margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid var(--grey-border); }
     .btn-avis-supprimer {
       display: inline-block;
+      min-height: 44px;
       padding: 0.4rem 0.85rem;
       font-size: 0.875rem;
       font-weight: 600;
@@ -537,7 +580,7 @@
     .footer p { margin: 0; font-size: 0.95rem; }
     .footer a { color: rgba(255,255,255,0.95); text-decoration: none; }
     .footer a:hover { text-decoration: underline; }
-    .footer-nav { display: flex; gap: 1.5rem; }
+    .footer-nav { display: flex; gap: 1.5rem; flex-wrap: wrap; }
     .footer-zone { font-size: 0.9rem; opacity: 0.9; margin-top: 0.25rem; }
 
     /* ----- Pictogrammes sobres (texte sémantique) ----- */
@@ -548,17 +591,144 @@
 
     /* ----- Responsive mobile-first ----- */
     @media (max-width: 768px) {
-      .contact-grid { grid-template-columns: 1fr; }
-      .footer-inner { flex-direction: column; text-align: center; }
+      .header-inner {
+        align-items: center;
+      }
+      .nav-toggle {
+        display: inline-flex;
+        margin-left: auto;
+      }
+      .nav {
+        display: none;
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.35rem;
+        padding-top: 0.85rem;
+        margin-top: 0.15rem;
+        border-top: 1px solid var(--grey-border);
+      }
+      .nav.is-open { display: flex; }
+      .nav a,
+      .nav .btn-devis {
+        display: block;
+        width: 100%;
+        min-height: 44px;
+        padding: 0.8rem 1rem;
+      }
+      .nav .btn-devis {
+        text-align: center;
+        margin-top: 0.25rem;
+      }
+      .hero {
+        padding: 2.75rem 1rem;
+        gap: 1.5rem;
+        min-height: auto;
+        flex-wrap: wrap;
+      }
+      .hero-logo {
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
+      }
+      .hero-logo img {
+        height: 90px;
+        max-width: 180px;
+        min-width: 120px;
+      }
+      .hero-inner,
+      .bandeau-inner,
+      .container {
+        min-width: 0;
+      }
+      .hero-btns,
+      .tarifs-cta {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .hero-btns .btn,
+      .tarifs-cta .btn-cta,
+      .contact-form-box button,
+      .avis-form-box .btn-cta,
+      .btn-avis-supprimer {
+        width: 100%;
+        text-align: center;
+      }
+      .quick-links,
+      .formations-grid,
+      .tarifs-grid,
+      .contact-grid,
+      .avis-grid {
+        grid-template-columns: 1fr;
+      }
       .section { padding: 2.5rem 0; }
+      .bandeau {
+        padding: 2rem 1rem;
+      }
+      .intro-block,
+      .formation-card,
+      .objectifs,
+      .tarif-card,
+      .formateur-block,
+      .contact-form-box,
+      .avis-form-box,
+      .avis-card {
+        padding: 1.5rem;
+      }
+      .formateur-block {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 1.5rem;
+      }
+      .formateur-block .photo {
+        display: block;
+        justify-self: center;
+        margin: 0 auto;
+        max-height: 260px;
+      }
+      .avis-form-box .rating-group {
+        justify-content: center;
+      }
+      .footer-inner {
+        flex-direction: column;
+        text-align: center;
+      }
+      .footer-logo-wrap {
+        justify-content: center;
+      }
+      .footer-nav {
+        width: 100%;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      .footer-nav a {
+        min-height: 44px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .contact-info p,
+      .footer p {
+        word-break: break-word;
+      }
     }
     @media (max-width: 640px) {
-      .hero { padding: 2.5rem 1rem; gap: 1.5rem; min-height: auto; flex-wrap: wrap; }
-      .hero-logo { width: 100%; display: flex; justify-content: flex-start; }
-      .hero-logo img { height: 90px; max-width: 180px; min-width: 120px; }
-      .formateur-block { grid-template-columns: 1fr; text-align: center; }
-      .formateur-block .photo { display: block; justify-self: center; margin: 0 auto; max-height: 260px; }
-      .nav a { padding: 0.6rem 0.75rem; }
+      .header-inner,
+      .container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+      }
+      h1 { font-size: clamp(1.55rem, 7vw, 2rem); }
+      h2,
+      .section-title { font-size: 1.35rem; }
+      .section-subtitle,
+      .hero p,
+      .bandeau p { font-size: 0.98rem; }
+      .reassurance,
+      .trust-note,
+      .avis-merci,
+      .devis-envoi-msg { font-size: 0.92rem; }
+      .nav a { padding: 0.75rem 0.9rem; }
       .btn { padding: 0.75rem 1.25rem; min-height: 48px; }
       .footer-logo { height: 50px; max-width: 150px; min-width: 100px; }
     }
@@ -569,7 +739,11 @@
   <header class="header" role="banner">
     <div class="header-inner">
       <a href="#accueil" class="logo">Formation <span>SST</span></a>
-      <nav class="nav" aria-label="Navigation principale">
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="main-nav" aria-label="Ouvrir le menu">
+        <span class="nav-toggle-bar" aria-hidden="true"></span>
+        Menu
+      </button>
+      <nav class="nav" id="main-nav" aria-label="Navigation principale">
         <a href="#accueil">Accueil</a>
         <a href="#formations">Formations</a>
         <a href="#entrainement">Entraînement</a>
@@ -690,7 +864,7 @@
       </div>
       <div class="tarifs-cta">
         <a href="#tarifs" class="btn-cta btn-cta-secondary">Voir les tarifs</a>
-        <a href="#contact" class="btn-cta btn-cta-primary" style="margin-left: 0.75rem;">Demander un devis</a>
+        <a href="#contact" class="btn-cta btn-cta-primary">Demander un devis</a>
       </div>
     </div>
   </section>
@@ -972,6 +1146,32 @@
     </div>
   </footer>
   <script>
+    (function () {
+      var toggle = document.querySelector('.nav-toggle');
+      var nav = document.getElementById('main-nav');
+      if (!toggle || !nav) return;
+
+      function setOpen(isOpen) {
+        nav.classList.toggle('is-open', isOpen);
+        toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        toggle.setAttribute('aria-label', isOpen ? 'Fermer le menu' : 'Ouvrir le menu');
+      }
+
+      toggle.addEventListener('click', function () {
+        setOpen(!nav.classList.contains('is-open'));
+      });
+
+      nav.querySelectorAll('a').forEach(function (link) {
+        link.addEventListener('click', function () {
+          if (window.innerWidth <= 768) setOpen(false);
+        });
+      });
+
+      window.addEventListener('resize', function () {
+        if (window.innerWidth > 768) setOpen(false);
+      });
+    })();
+
     (function () {
       var form = document.getElementById('form-avis');
       var list = document.querySelector('.avis-list');
