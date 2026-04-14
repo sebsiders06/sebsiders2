@@ -1233,8 +1233,15 @@
         </div>
         <div class="contact-form-box">
           <h3>Demander un devis</h3>
-          <p id="devis-envoi-msg" class="devis-envoi-msg" role="status" aria-live="polite" style="display: none;"></p>
-          <form id="form-devis" action="#" method="get" novalidate>
+          <form id="form-devis" action="https://formsubmit.co/philippe.clemente@orange.fr" method="POST">
+            <input type="hidden" name="_captcha" value="false" />
+            <input type="hidden" name="_next" value="https://secouristedutravail.fr/merci.html" />
+            <input type="hidden" name="_subject" value="Nouvelle demande depuis le site Formation SST" />
+            <input type="hidden" name="_template" value="table" />
+            <label style="display: none;" aria-hidden="true">
+              <span>Ne pas remplir ce champ</span>
+              <input type="text" name="_honey" tabindex="-1" autocomplete="off" />
+            </label>
             <label>
               <span>Nom</span>
               <input type="text" name="nom" required placeholder="Votre nom" maxlength="200" autocomplete="name" />
@@ -1437,105 +1444,6 @@
       rendreBoutonSupprimerPourMesAvis();
     })();
 
-    (function () {
-      var formDevis = document.getElementById('form-devis');
-      var msgDevis = document.getElementById('devis-envoi-msg');
-      var btnDevis = formDevis ? formDevis.querySelector('button[type="submit"]') : null;
-      var emailDevis = 'philippe.clemente@orange.fr';
-      if (!formDevis) return;
-
-      formDevis.addEventListener('submit', function (e) {
-        e.preventDefault();
-        var nom = (formDevis.querySelector('[name="nom"]') || {}).value.trim();
-        var email = (formDevis.querySelector('[name="email"]') || {}).value.trim();
-        var telephone = (formDevis.querySelector('[name="telephone"]') || {}).value.trim();
-        var sujet = (formDevis.querySelector('[name="sujet"]') || {}).value.trim();
-        var message = (formDevis.querySelector('[name="message"]') || {}).value.trim();
-
-        if (!nom) {
-          showDevisMsg('Veuillez indiquer votre nom.', true);
-          formDevis.querySelector('[name="nom"]').focus();
-          return;
-        }
-        if (!email) {
-          showDevisMsg('Veuillez indiquer votre adresse email.', true);
-          formDevis.querySelector('[name="email"]').focus();
-          return;
-        }
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-          showDevisMsg('Veuillez saisir une adresse email valide.', true);
-          formDevis.querySelector('[name="email"]').focus();
-          return;
-        }
-        if (telephone && !/^[0-9+\s().-]{6,30}$/.test(telephone)) {
-          showDevisMsg('Veuillez saisir un numéro de téléphone valide.', true);
-          formDevis.querySelector('[name="telephone"]').focus();
-          return;
-        }
-        if (!sujet) {
-          showDevisMsg('Veuillez indiquer le sujet de votre demande.', true);
-          formDevis.querySelector('[name="sujet"]').focus();
-          return;
-        }
-        if (!message) {
-          showDevisMsg('Veuillez rédiger votre message.', true);
-          formDevis.querySelector('[name="message"]').focus();
-          return;
-        }
-
-        var formData = new FormData();
-        formData.append('nom', nom);
-        formData.append('email', email);
-        formData.append('telephone', telephone);
-        formData.append('sujet', sujet);
-        formData.append('message', message);
-
-        if (btnDevis) {
-          btnDevis.disabled = true;
-          btnDevis.textContent = 'Envoi en cours…';
-        }
-
-        fetch('send-devis.php', {
-          method: 'POST',
-          body: formData
-        })
-          .then(function (res) { return res.json().then(function (data) { return { ok: res.ok, data: data }; }); })
-          .then(function (result) {
-            if (result.ok && result.data.ok) {
-              showDevisMsg(result.data.message || 'Votre demande a bien été envoyée. Nous vous répondrons sous 24 h.');
-              formDevis.reset();
-            } else {
-              showDevisMsg(result.data.message || 'L\'envoi a échoué. Réessayez ou contactez-nous à ' + emailDevis + '.', true);
-            }
-          })
-          .catch(function () {
-            showDevisMsg('Connexion impossible. Votre client mail va s\'ouvrir pour envoyer votre demande.', false);
-            var subject = sujet || 'Demande de devis – Formation SST';
-            var body = 'Nom : ' + nom + '\r\nEmail : ' + email + '\r\nTéléphone : ' + (telephone || 'Non renseigné') + '\r\nSujet : ' + subject + '\r\n\r\nMessage :\r\n' + message;
-            window.location.href = 'mailto:' + emailDevis + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
-          })
-          .then(function () {
-            if (btnDevis) {
-              btnDevis.disabled = false;
-              btnDevis.textContent = 'Envoyer ma demande';
-            }
-          });
-      });
-
-      function showDevisMsg(text, isError) {
-        if (!msgDevis) return;
-        msgDevis.textContent = text;
-        msgDevis.style.display = 'block';
-        if (isError) {
-          msgDevis.style.color = 'var(--red-secours)';
-          msgDevis.style.background = 'var(--red-secours-soft)';
-        } else {
-          msgDevis.style.color = '';
-          msgDevis.style.background = '';
-          setTimeout(function () { msgDevis.style.display = 'none'; }, 8000);
-        }
-      }
-    })();
   </script>
 </body>
 </html>

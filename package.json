@@ -1,0 +1,16 @@
+{
+  "name": "formation-sst-contact",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Site Formation SST avec formulaire de contact Node.js/Express",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "dotenv": "latest",
+    "express": "latest",
+    "nodemailer": "latest"
+  }
+}

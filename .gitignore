@@ -1,2 +1,4 @@
 /vendor/
 config-mail.php
+.env
+/node_modules/
