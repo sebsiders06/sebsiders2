@@ -142,24 +142,19 @@
       min-width: 0;
       text-decoration: none;
     }
-    .logo {
-      font-size: 1.2rem;
-      font-weight: 700;
-      color: var(--blue-marine);
-      letter-spacing: -0.02em;
-      text-decoration: none;
-      display: inline-block;
-    }
-    .logo span { color: var(--red-secours); font-weight: 600; }
-    .brand:hover .logo { color: var(--blue-marine-light); }
     .header-logo {
       display: block;
       width: auto;
-      height: 48px;
-      max-width: 145px;
+      height: 56px;
+      max-width: 220px;
       object-fit: contain;
-      object-position: center;
+      object-position: left center;
       flex-shrink: 0;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+    .brand:hover .header-logo {
+      opacity: 0.92;
+      transform: scale(1.02);
     }
     .nav {
       display: flex;
@@ -629,10 +624,10 @@
     }
     .footer-logo {
       display: block;
-      height: 60px;
+      height: 72px;
       width: auto;
-      max-width: 180px;
-      min-width: 120px;
+      max-width: 240px;
+      min-width: 140px;
       object-fit: contain;
       object-position: left center;
       vertical-align: middle;
@@ -664,11 +659,10 @@
       .brand {
         flex: 1 1 auto;
         max-width: calc(100% - 64px);
-        gap: 0.6rem;
       }
       .header-logo {
-        height: 40px;
-        max-width: 122px;
+        height: 46px;
+        max-width: 180px;
       }
       .nav-toggle {
         display: inline-flex;
@@ -815,12 +809,9 @@
         text-align: left;
         gap: 0.5rem;
       }
-      .logo {
-        width: auto;
-      }
       .header-logo {
-        height: 36px;
-        max-width: 108px;
+        height: 42px;
+        max-width: 150px;
       }
       h1 { font-size: clamp(1.55rem, 7vw, 2rem); }
       h2,
@@ -834,7 +825,7 @@
       .devis-envoi-msg { font-size: 0.92rem; }
       .nav a { padding: 0.75rem 0.9rem; }
       .btn { padding: 0.75rem 1.25rem; min-height: 48px; }
-      .footer-logo { height: 50px; max-width: 150px; min-width: 100px; }
+      .footer-logo { height: 58px; max-width: 190px; min-width: 120px; }
     }
     @media (max-width: 380px) {
       .header-inner {
@@ -848,12 +839,9 @@
         flex-wrap: wrap;
         text-align: center;
       }
-      .logo {
-        width: 100%;
-      }
       .header-logo {
-        height: 38px;
-        max-width: 112px;
+        height: 44px;
+        max-width: 168px;
       }
       .nav-toggle {
         margin-left: 0;
@@ -866,8 +854,7 @@
   <header class="header" role="banner">
     <div class="header-inner">
       <a href="#accueil" class="brand" aria-label="Formation SST - retour à l'accueil">
-        <span class="logo">Formation <span>SST</span></span>
-        <img src="image/image.png" alt="Logo Formation SST en Bourgogne-Franche-Comté" class="header-logo" width="160" height="56" loading="eager" decoding="async">
+        <img src="image/siderspixel-logo.png" alt="Logo" class="header-logo" width="220" height="220" loading="eager" decoding="async">
       </a>
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="main-nav" aria-label="Ouvrir le menu">
         <span class="nav-toggle-bar" aria-hidden="true"></span>
@@ -1273,7 +1260,7 @@
   <footer class="footer" role="contentinfo">
     <div class="footer-inner">
       <div class="footer-logo-wrap">
-        <img src="image/image.png" alt="Logo Formation SST Bourgogne-Franche-Comté" class="footer-logo" width="160" height="56" loading="lazy" decoding="async">
+        <img src="image/siderspixel-logo.png" alt="Logo" class="footer-logo" width="220" height="220" loading="lazy" decoding="async">
       </div>
       <div>
         <p>© 2025 Philippe Clemente – Formation SST. Formateur certifié INRS.</p>
