@@ -14,9 +14,14 @@
   <meta property="og:site_name" content="Formation SST Philippe Clemente">
   <meta property="og:url" content="https://secouristedutravail.fr/">
   <meta property="og:image" content="https://secouristedutravail.fr/image/image.png">
+  <meta property="og:image:width" content="400">
+  <meta property="og:image:height" content="400">
+  <meta property="og:image:alt" content="Logo Formation SST Philippe Clemente en Bourgogne-Franche-Comte">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Formation SST en Bourgogne-Franche-Comté | MAC SST | Philippe Clemente">
   <meta name="twitter:description" content="Formation SST initiale et MAC SST en Bourgogne-Franche-Comté. Formateur certifié INRS, sessions sur site et devis sous 24 h.">
+  <meta name="twitter:image" content="https://secouristedutravail.fr/image/image.png">
+  <meta name="twitter:image:alt" content="Logo Formation SST Philippe Clemente en Bourgogne-Franche-Comte">
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -29,42 +34,171 @@
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "LocalBusiness",
-      "name": "Formation SST Philippe Clemente",
-      "image": "https://secouristedutravail.fr/image/image.png",
-      "url": "https://secouristedutravail.fr/",
-      "telephone": "+33614105502",
-      "email": "philippe.clemente@orange.fr",
-      "description": "Formation SST initiale, MAC SST et entraînement aux gestes de secours en Bourgogne-Franche-Comté pour entreprises, salariés et professionnels.",
-      "areaServed": [
-        "Bourgogne-Franche-Comté",
-        "Besançon",
-        "Belfort",
-        "Montbéliard",
-        "Vesoul",
-        "Dole",
-        "Lons-le-Saunier",
-        "Doubs",
-        "Jura",
-        "Haute-Saône",
-        "Territoire de Belfort"
-      ],
-      "priceRange": "€€",
-      "makesOffer": [
+      "@graph": [
         {
-          "@type": "Offer",
-          "name": "Formation SST initiale",
-          "description": "Formation Sauveteur Secouriste du Travail de 14 heures."
+          "@type": "LocalBusiness",
+          "@id": "https://secouristedutravail.fr/#business",
+          "name": "Formation SST Philippe Clemente",
+          "url": "https://secouristedutravail.fr/",
+          "image": "https://secouristedutravail.fr/image/image.png",
+          "logo": "https://secouristedutravail.fr/image/image.png",
+          "telephone": "+33614105502",
+          "email": "philippe.clemente@orange.fr",
+          "description": "Formation SST initiale, MAC SST et entraînement aux gestes de secours en Bourgogne-Franche-Comté pour entreprises, salariés et professionnels.",
+          "priceRange": "€€",
+          "address": {
+            "@type": "PostalAddress",
+            "addressRegion": "Bourgogne-Franche-Comte",
+            "addressCountry": "FR"
+          },
+          "areaServed": [
+            "Bourgogne-Franche-Comte",
+            "Besancon",
+            "Belfort",
+            "Montbeliard",
+            "Vesoul",
+            "Dole",
+            "Lons-le-Saunier",
+            "Doubs",
+            "Jura",
+            "Haute-Saone",
+            "Territoire de Belfort"
+          ],
+          "knowsAbout": [
+            "Formation SST",
+            "MAC SST",
+            "Gestes de premiers secours",
+            "Prevention des risques professionnels",
+            "Entrainement aux gestes de secours"
+          ],
+          "contactPoint": [
+            {
+              "@type": "ContactPoint",
+              "contactType": "customer support",
+              "telephone": "+33614105502",
+              "email": "philippe.clemente@orange.fr",
+              "areaServed": "FR",
+              "availableLanguage": [
+                "fr"
+              ]
+            }
+          ],
+          "hasOfferCatalog": {
+            "@type": "OfferCatalog",
+            "name": "Formations et entrainements SST",
+            "itemListElement": [
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Formation SST initiale",
+                  "description": "Formation Sauveteur Secouriste du Travail de 14 heures pour devenir SST.",
+                  "areaServed": "Bourgogne-Franche-Comte"
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "MAC SST",
+                  "description": "Maintien et actualisation des competences SST de 7 heures pour renouveler le certificat.",
+                  "areaServed": "Bourgogne-Franche-Comte"
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Entrainement aux gestes de secours",
+                  "description": "Sessions pratiques sur site ou en centre pour maintenir les reflexes de secours.",
+                  "areaServed": "Bourgogne-Franche-Comte"
+                }
+              }
+            ]
+          },
+          "review": [
+            {
+              "@type": "Review",
+              "author": {
+                "@type": "Person",
+                "name": "Marie L."
+              },
+              "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5",
+                "bestRating": "5",
+                "worstRating": "1"
+              },
+              "reviewBody": "Formation tres claire et pratique. Le formateur sait mettre en confiance. Je recommande."
+            },
+            {
+              "@type": "Review",
+              "author": {
+                "@type": "Person",
+                "name": "Thomas B."
+              },
+              "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "4",
+                "bestRating": "5",
+                "worstRating": "1"
+              },
+              "reviewBody": "Bonne formation SST, les mises en situation sont realistes. Recyclage bien organise."
+            }
+          ],
+          "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.5",
+            "reviewCount": "2",
+            "bestRating": "5",
+            "worstRating": "1"
+          }
         },
         {
-          "@type": "Offer",
-          "name": "MAC SST",
-          "description": "Maintien et actualisation des compétences SST de 7 heures."
-        },
-        {
-          "@type": "Offer",
-          "name": "Entraînement aux gestes de secours",
-          "description": "Sessions pratiques sur site ou en centre pour maintenir les réflexes de secours."
+          "@type": "FAQPage",
+          "@id": "https://secouristedutravail.fr/#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Quelle est la duree d'une formation SST initiale ?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "La formation SST initiale dure 14 heures, soit generalement 2 jours."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Combien de temps est valable le certificat SST ?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Le certificat SST est valable 24 mois. Pour le renouveler, il faut suivre un MAC SST de 7 heures."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Qui peut suivre une formation SST ?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "La formation SST est accessible a tous, sans prerequis, pour les salaries, entreprises, associations et collectivites."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Ou intervenez-vous en Bourgogne-Franche-Comte ?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Les interventions sont possibles dans toute la Bourgogne-Franche-Comte, notamment a Besancon, Belfort, Montbeliard, Vesoul, Dole et Lons-le-Saunier."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Sous quel delai obtenez-vous un devis ?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Les demandes de devis recoivent une reponse sous 24 heures."
+              }
+            }
+          ]
         }
       ]
     }
@@ -609,6 +743,31 @@
     }
     .btn-avis-supprimer:hover { background: var(--red-secours-soft); color: #991b1b; }
     .avis-merci { font-size: 0.95rem; color: var(--green-prevention); font-weight: 600; margin: 0 0 1rem; padding: 0.75rem 1rem; background: var(--green-soft); border-radius: var(--radius); border: 1px solid rgba(4, 120, 87, 0.2); }
+    .faq-list {
+      display: grid;
+      gap: 1rem;
+      margin-top: 1.25rem;
+    }
+    .faq-item {
+      background: var(--bg-card);
+      border: 1px solid var(--grey-border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .faq-item summary {
+      cursor: pointer;
+      list-style: none;
+      padding: 1rem 1.1rem;
+      font-weight: 700;
+      color: var(--blue-marine);
+    }
+    .faq-item summary::-webkit-details-marker { display: none; }
+    .faq-item p {
+      margin: 0;
+      padding: 0 1.1rem 1rem;
+      color: var(--text);
+    }
     @media (max-width: 768px) { .avis-grid { grid-template-columns: 1fr; } }
 
     /* ----- Footer institutionnel ----- */
@@ -1150,6 +1309,45 @@
     </div>
   </section>
 
+  <section id="faq" class="bandeau" aria-label="Questions frequentes">
+    <div class="bandeau-inner">
+      <p class="badge">FAQ</p>
+      <h2>Questions frequentes sur la formation SST</h2>
+      <p>Les reponses essentielles avant de reserver une formation SST, un MAC SST ou un entrainement pratique.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <p class="section-subtitle" style="margin-top: 0;">Cette FAQ reprend les questions les plus frequentes des entreprises et des stagiaires avant une demande de devis.</p>
+      <div class="faq-list">
+        <details class="faq-item">
+          <summary>Quelle est la duree d'une formation SST initiale ?</summary>
+          <p>La formation SST initiale dure <strong>14 heures</strong>, soit generalement <strong>2 jours</strong>. Elle permet d'apprendre les gestes de premiers secours et la prevention des risques professionnels en entreprise.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Combien de temps le certificat SST reste-t-il valable ?</summary>
+          <p>Le certificat SST reste valable <strong>24 mois</strong>. Pour conserver sa validite, il faut suivre un <strong>MAC SST de 7 heures</strong> avant l'echeance.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Faut-il des prerequis pour suivre une formation SST ?</summary>
+          <p>Non. La formation SST est <strong>accessible sans prerequis</strong> et s'adresse aux salaries, entreprises, associations et collectivites qui souhaitent former leurs equipes aux gestes qui sauvent.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Dans quelles villes intervenez-vous ?</summary>
+          <p>Les interventions sont possibles dans toute la <strong>Bourgogne-Franche-Comte</strong>, notamment a <strong>Besancon, Belfort, Montbeliard, Vesoul, Dole</strong> et <strong>Lons-le-Saunier</strong>, en entreprise ou selon le format retenu.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Sous quel delai recevez-vous un devis ?</summary>
+          <p>Les demandes de devis recoivent une reponse <strong>sous 24 heures</strong>. Vous pouvez utiliser le formulaire de contact pour preciser la formation souhaitee, le nombre de participants et le lieu d'intervention.</p>
+        </details>
+      </div>
+      <div class="tarifs-cta" style="margin-top: 1.5rem;">
+        <a href="#contact" class="btn-cta btn-cta-primary">Demander un devis</a>
+      </div>
+    </div>
+  </section>
+
   <section id="formateur" class="bandeau" aria-label="Formateur">
     <div class="bandeau-inner">
       <p class="badge">Formateur</p>
@@ -1309,6 +1507,7 @@
         <a href="#formations">Formations</a>
         <a href="#entrainement">Entraînement</a>
         <a href="#tarifs">Tarifs</a>
+        <a href="#faq">FAQ</a>
         <a href="#avis">Avis clients</a>
         <a href="#contact">Contact</a>
         <a href="mentions-legales-confidentialite-cgu.html">Mentions légales &amp; CGU</a>
